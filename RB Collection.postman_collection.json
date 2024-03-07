@@ -1,0 +1,1368 @@
+{
+	"info": {
+		"_postman_id": "ef22a2f6-6f6e-4033-8a64-ec07e1417043",
+		"name": "RB Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22686922"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "create_user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_name\": \"van.nguyencam2\",\n    \"pin\": \"\",\n    \"role_id\":\"6617d7d4-4e71-4e9d-bb0c-3d5b35a772dc\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8084/user/auth/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"user",
+								"auth",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8084/user/auth/user-detail/6bd68bed-f6b7-4ff3-bc8d-30f27c8e17bf",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"user",
+								"auth",
+								"user-detail",
+								"6bd68bed-f6b7-4ff3-bc8d-30f27c8e17bf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{RHD}}/auth/user-detail/37209b34-e807-4e95-b3fc-47de1cb77c1a",
+							"host": [
+								"{{RHD}}"
+							],
+							"path": [
+								"auth",
+								"user-detail",
+								"37209b34-e807-4e95-b3fc-47de1cb77c1a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My profiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{RHD}}/auth/my-profile",
+							"host": [
+								"{{RHD}}"
+							],
+							"path": [
+								"auth",
+								"my-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]My profiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_BE}}/user/auth/my-profile",
+							"host": [
+								"{{HOST_BE}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"my-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Heal Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://smartcollection-nonprod.vib/dev/api/be/user/v1/health",
+							"protocol": "https",
+							"host": [
+								"smartcollection-nonprod",
+								"vib"
+							],
+							"path": [
+								"dev",
+								"api",
+								"be",
+								"user",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "AuthByLDAP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == 200) {",
+									"    var jsonData = pm.response.json()",
+									"    var authToken = \"Bearer \" + jsonData[\"data\"][\"access_token\"]",
+									"    var rrAuthToken = jsonData[\"data\"][\"refresh_token\"]",
+									"    pm.environment.set(\"Refresh-token\", rrAuthToken)",
+									"    pm.environment.set(\"Token-auth\", authToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_name\": \"admin\",\n    \"password\": \"1234567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8084/user/auth-by-password",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"user",
+								"auth-by-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]AuthByLDAP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == 200) {",
+									"    var jsonData = pm.response.json()",
+									"    var authToken = \"Bearer \" + jsonData[\"data\"][\"access_token\"]",
+									"    var rrAuthToken = jsonData[\"data\"][\"refresh_token\"]",
+									"    pm.environment.set(\"Refresh-token\", rrAuthToken)",
+									"    pm.environment.set(\"Token-auth\", authToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_name\": \"admin\",\n    \"password\": \"*******\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_BE}}/user/auth-by-password",
+							"host": [
+								"{{HOST_BE}}"
+							],
+							"path": [
+								"user",
+								"auth-by-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AuthByLDAPPIN",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == 200) {",
+									"    var jsonData = pm.response.json()",
+									"    var authToken = \"Bearer \" + jsonData[\"data\"][\"access_token\"]",
+									"    var rrAuthToken = jsonData[\"data\"][\"refresh_token\"]",
+									"    pm.environment.set(\"Refresh-token\", rrAuthToken)",
+									"    pm.environment.set(\"Token-auth\", authToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"user_name\": \"vi.tranha\",\n    \"pin\": \"8888\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_APP}}/user/auth-by-pin",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"user",
+								"auth-by-pin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sing_out_user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"device_id\": \"123456789101112\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8084/user/auth/sign-out",
+							"host": [
+								"localhost"
+							],
+							"port": "8084",
+							"path": [
+								"user",
+								"auth",
+								"sign-out"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "App User",
+			"item": [
+				{
+					"name": "AuthByLDAP Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == 200) {",
+									"    var jsonData = pm.response.json()",
+									"    var authToken = \"Bearer \" + jsonData[\"data\"][\"access_token\"]",
+									"    var rrAuthToken = jsonData[\"data\"][\"refresh_token\"]",
+									"    pm.environment.set(\"Refresh-token\", rrAuthToken)",
+									"    pm.environment.set(\"Token-auth\", authToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_name\": \"vi.tranha\",\n    \"password\": \"1234567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8086/user/auth-by-password",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"user",
+								"auth-by-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]-AuthByLDAP",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code == 200) {",
+									"    var jsonData = pm.response.json()",
+									"    var authToken = \"Bearer \" + jsonData[\"data\"][\"access_token\"]",
+									"    var rrAuthToken = jsonData[\"data\"][\"refresh_token\"]",
+									"    pm.environment.set(\"Refresh-token\", rrAuthToken)",
+									"    pm.environment.set(\"Token-auth\", authToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_name\": \"vi.tranha\",\n    \"password\": \"1234567\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_APP}}/user/auth-by-password",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"user",
+								"auth-by-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Heal Check Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://smartcollection-nonprod.vib/dev/api/app/user/v1/health",
+							"protocol": "https",
+							"host": [
+								"smartcollection-nonprod",
+								"vib"
+							],
+							"path": [
+								"dev",
+								"api",
+								"app",
+								"user",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "My profiles Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_APP}}/user/auth/my-profile",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"my-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"device_id\":\"ssssssssssssss\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8085/user/auth/sign-out",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"user",
+								"auth",
+								"sign-out"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PIN",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pin\": \"1111\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/user/pin",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"user",
+								"pin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"new_pin\": \"8888\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_APP}}/user/auth/pin",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"user",
+								"auth",
+								"pin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pin\": \"8888\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/user/user-detail/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"user",
+								"user-detail",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Get prod",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8086/product/auth/prod-detail/e4217638-598e-48f2-9c2f-684f55ca5e3c",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"product",
+								"auth",
+								"prod-detail",
+								"e4217638-598e-48f2-9c2f-684f55ca5e3c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get prod Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8086/product/v1/health",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"product",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Heal Check",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "https://smartcollection-nonprod.vib/dev/api/app/product/v1/health",
+							"protocol": "https",
+							"host": [
+								"smartcollection-nonprod",
+								"vib"
+							],
+							"path": [
+								"dev",
+								"api",
+								"app",
+								"product",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Asset List",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"p\": 1,\n    \"s\":20,\n    \"type\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_APP}}/product/auth/asset-list",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"product",
+								"auth",
+								"asset-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]-Get Asset List",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\": {\n        \"on_sale\": 1,\n        \"un_sold\": 1,\n        \"sold\": 1\n    },\n    \"error\": \"\",\n    \"error_msg\": \"\",\n    \"version\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8086/product/auth/asset-list",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"product",
+								"auth",
+								"asset-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]-Get Asset Sumary Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_APP}}/product/auth/my-asset-summary",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"product",
+								"auth",
+								"my-asset-summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Genetal Asset Sumary",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_APP}}/product/auth/general-asset-summary",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"product",
+								"auth",
+								"general-asset-summary"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "App product",
+			"item": [
+				{
+					"name": "Get prod Copy 2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8087/product/auth/asset-detail/e4217638-598e-48f2-9c2f-684f55ca5e3c",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"asset-detail",
+								"e4217638-598e-48f2-9c2f-684f55ca5e3c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Asset Sumary Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8087/product/auth/my-asset-summary",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"my-asset-summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]-Get prod Copy 3",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{HOST_APP}}/product/auth/asset-detail/e4217638-598e-48f2-9c2f-684f55ca5e3c",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"product",
+								"auth",
+								"asset-detail",
+								"e4217638-598e-48f2-9c2f-684f55ca5e3c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]-Get Asset List Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"p\": 1,\n    \"s\":20,\n    \"asset_type\": 1,\n    \"sale_status\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8087/product/auth/asset-list",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"asset-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Asset List",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"p\": 1,\n    \"s\":20,\n    \"type\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST_APP}}/product/auth/asset-list",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"product",
+								"auth",
+								"asset-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Asset Advise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"asset_id\": \"00ee05b9-605f-4dba-adda-766221b532b2\",\n    \"customer_id\": \"448033cf-276e-435f-becf-220c187b0fa8\",\n    \"source\": \"app\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8087/product/auth/advise/",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"advise",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Creat Advise Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status_lv_1\": 1,\n    \"status_lv_2\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8087/product/auth/advise/203518d2-fd20-4104-81aa-5a61917f2708/status",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"advise",
+								"203518d2-fd20-4104-81aa-5a61917f2708",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Advise Nego Price",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status_lv_1\": 1,\n    \"status_lv_2\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8087/product/auth/advise/203518d2-fd20-4104-81aa-5a61917f2708/status",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"advise",
+								"203518d2-fd20-4104-81aa-5a61917f2708",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[DEV]-Create Asset Advise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"asset_id\": \"00ee05b9-605f-4dba-adda-766221b532b2\",\n    \"customer_id\": \"448033cf-276e-435f-becf-220c187b0fa8\",\n    \"source\": \"app\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8087/product/auth/advise",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"advise"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAssetCustomerConcernList",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "localhost:8087/product/auth/advise/00ee05b9-605f-4dba-adda-766221b532b2/cus-concern-list",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"advise",
+								"00ee05b9-605f-4dba-adda-766221b532b2",
+								"cus-concern-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAdviseListByAssetId",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"advise_status\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8087/product/auth/asset/00ee05b9-605f-4dba-adda-766221b532b2/advise-list",
+							"host": [
+								"localhost"
+							],
+							"port": "8087",
+							"path": [
+								"product",
+								"auth",
+								"asset",
+								"00ee05b9-605f-4dba-adda-766221b532b2",
+								"advise-list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "BE-Customer",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Heal Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_APP}}/customer/v1/health",
+							"host": [
+								"{{HOST_APP}}"
+							],
+							"path": [
+								"customer",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"p\": 1,\n    \"s\":20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/customer/auth/customer-list",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"customer",
+								"auth",
+								"customer-list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AA-Customer",
+			"item": [
+				{
+					"name": "Heal Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8089/customer/v1/health",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"customer",
+								"v1",
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Token-auth}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"p\": 1,\n    \"s\":20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8089/customer/auth/customer-list",
+							"host": [
+								"localhost"
+							],
+							"port": "8089",
+							"path": [
+								"customer",
+								"auth",
+								"customer-list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
