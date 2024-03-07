@@ -1,0 +1,80 @@
+syntax = "proto3";
+option go_package = "/pb";
+
+// protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative rbc.proto
+// The greeting service definition.
+service User {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+  rpc SayGoodBye (GoodByeRequest) returns (GoodByeReply) {}
+  // Get User By Id
+  rpc GetUserById (GetByIdRequest) returns (UserInfoReply) {}
+  rpc GetUserProfileByAccessToken(TokenRequest) returns (UserProfileReply) {}
+}
+
+service Product {
+  // Get Product By Id
+  rpc GetProductById (GetByIdRequest) returns (ProductInfoReply) {}
+}
+
+message ProductInfoReply {
+  string id = 1;
+  string name = 2;
+}
+
+message TokenRequest {
+  string	Token = 1;
+}
+
+message GetByIdRequest {
+  string id = 1;
+}
+
+message UserInfoReply {
+  string id = 1;
+  string name = 2;
+}
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+  string id = 2;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+
+// The request message containing the user's name.
+message GoodByeRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message GoodByeReply {
+  string message = 1;
+}
+
+message UserProfileReply {
+  string  Id                                                = 1;
+  string  GroupID                                          = 2;
+  string  RoomID                                          = 3;
+  string  StaffId                                           = 4;
+  string  FullName                                       = 5;
+  string  UserName                                          = 6;
+  string  TaxCode                                             = 7;
+  string  BankAccount                                             = 8;
+  string  BankCode                                            = 9;
+  string  AgentCode                                            = 10;
+  string  Phone                                            = 11;
+  string  Email                                         = 12;
+  string  Gender                                        = 13;
+  string  Avatar                                   = 14;
+  string  Status                              = 15;
+  repeated RoleDetail  Roles                                = 16;
+}
+
+message RoleDetail {
+  string	Name     					                              = 1;
+  string	Code     					                              = 2;
+}
